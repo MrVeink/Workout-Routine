@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4a90e2">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>Workout Tracker</h1>
+        </header>
+        
+        <div class="date-navigation">
+            <button id="prev-date">◀</button>
+            <h2 id="current-date">Loading...</h2>
+            <button id="next-date">▶</button>
+        </div>
+        
+        <div class="workout-card">
+            <div class="exercise-list">
+                <div class="exercise" id="sit-ups">
+                    <h3>Sit-ups</h3>
+                    <div class="counter">
+                        <button class="decrement">-</button>
+                        <span class="count">0</span>
+                        <button class="increment">+</button>
+                    </div>
+                    <div class="target">Target: <span class="target-value">0</span></div>
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+                
+                <div class="exercise" id="push-ups">
+                    <h3>Push-ups</h3>
+                    <div class="counter">
+                        <button class="decrement">-</button>
+                        <span class="count">0</span>
+                        <button class="increment">+</button>
+                    </div>
+                    <div class="target">Target: <span class="target-value">0</span></div>
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+                
+                <div class="exercise" id="squats">
+                    <h3>Squats</h3>
+                    <div class="counter">
+                        <button class="decrement">-</button>
+                        <span class="count">0</span>
+                        <button class="increment">+</button>
+                    </div>
+                    <div class="target">Target: <span class="target-value">0</span></div>
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+                
+                <div class="exercise" id="pull-ups">
+                    <h3>Pull-ups</h3>
+                    <div class="counter">
+                        <button class="decrement">-</button>
+                        <span class="count">0</span>
+                        <button class="increment">+</button>
+                    </div>
+                    <div class="target">Target: <span class="target-value">0</span></div>
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button id="complete-workout">Complete Workout</button>
+                <button id="reset-workout">Reset Progress</button>
+            </div>
+        </div>
+        
+        <div class="calendar-toggle">
+            <button id="show-calendar">View Calendar</button>
+        </div>
+        
+        <div class="calendar-view" style="display:none">
+            <h2>Workout Calendar</h2>
+            <div id="calendar-container"></div>
+            <button id="hide-calendar">Back to Tracker</button>
+        </div>
+        
+        <footer>
+            <p>Tap + to install this app to your home screen for offline use</p>
+        </footer>
+    </div>
+    
+    <script src="workout-data.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Register service worker for offline functionality
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+              .then(reg => console.log('Service Worker registered', reg))
+              .catch(err => console.log('Service Worker registration failed', err));
+        }
+    </script>
+</body>
+</html>
