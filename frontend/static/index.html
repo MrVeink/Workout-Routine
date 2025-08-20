@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Tracker - Rust Backend Demo</title>
+    <link rel="stylesheet" href="./style.css">
+    <meta name="theme-color" content="#4a90e2">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>Workout Tracker</h1>
+            <p><small>Rust + Axum Backend Demo</small></p>
+        </header>
+        
+        <div class="api-demo">
+            <h2>API Demo</h2>
+            <div class="demo-section">
+                <h3>Available Endpoints:</h3>
+                <ul>
+                    <li><code>GET /api/workouts</code> - List all workouts</li>
+                    <li><code>GET /api/workouts/{date}</code> - Get workout by date</li>
+                    <li><code>GET /api/progress/{date}</code> - Get progress for date</li>
+                    <li><code>PUT /api/progress/{date}</code> - Update progress</li>
+                    <li><code>POST /api/progress/{date}/complete</code> - Complete workout</li>
+                    <li><code>POST /api/progress/{date}/reset</code> - Reset progress</li>
+                </ul>
+            </div>
+            
+            <div class="demo-section">
+                <h3>Try the API:</h3>
+                <button onclick="fetchWorkouts()">Fetch All Workouts</button>
+                <button onclick="fetchProgress('18.08.2025')">Get Progress for 18.08.2025</button>
+                <button onclick="updateProgress('18.08.2025', 'sit_ups', 10)">Update Sit-ups to 10</button>
+                <button onclick="completeWorkout('18.08.2025')">Complete Workout</button>
+                <button onclick="resetProgress('18.08.2025')">Reset Progress</button>
+            </div>
+            
+            <div class="demo-section">
+                <h3>API Response:</h3>
+                <pre id="api-response">Click a button above to test the API...</pre>
+            </div>
+        </div>
+        
+        <div class="workout-card">
+            <h2>Basic Workout Display</h2>
+            <div id="workout-display">
+                <p>Loading workout data...</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>🦀 Powered by Rust + Axum Backend</p>
+        </footer>
+    </div>
+    
+    <script>
+        const API_BASE = 'http://localhost:3001/api';
+        
+        async function apiCall(url, options = {}) {
+            try {
+                const response = await fetch(`${API_BASE}${url}`, {
+                    ...options,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...options.headers
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                document.getElementById('api-response').textContent = JSON.stringify(data, null, 2);
+                return data;
+            } catch (error) {
+                document.getElementById('api-response').textContent = `Error: ${error.message}`;
+                console.error('API call failed:', error);
+            }
+        }
+        
+        async function fetchWorkouts() {
+            const workouts = await apiCall('/workouts');
+            if (workouts) {
+                displayWorkouts(workouts);
+            }
+        }
+        
+        async function fetchProgress(date) {
+            await apiCall(`/progress/${date}`);
+        }
+        
+        async function updateProgress(date, exercise, count) {
+            await apiCall(`/progress/${date}`, {
+                method: 'PUT',
+                body: JSON.stringify({ exercise, count })
+            });
+        }
+        
+        async function completeWorkout(date) {
+            await apiCall(`/progress/${date}/complete`, {
+                method: 'POST'
+            });
+        }
+        
+        async function resetProgress(date) {
+            await apiCall(`/progress/${date}/reset`, {
+                method: 'POST'
+            });
+        }
+        
+        function displayWorkouts(workouts) {
+            const display = document.getElementById('workout-display');
+            if (!workouts || workouts.length === 0) {
+                display.innerHTML = '<p>No workouts available</p>';
+                return;
+            }
+            
+            const firstWorkout = workouts[0];
+            const isRestDay = firstWorkout.sit_ups === 0 && firstWorkout.push_ups === 0 && 
+                            firstWorkout.squats === 0 && firstWorkout.pull_ups === 0;
+            
+            display.innerHTML = `
+                <div class="workout-info">
+                    <h3>Date: ${firstWorkout.date}</h3>
+                    ${isRestDay ? 
+                        '<p class="rest-day">🛌 Rest Day</p>' : 
+                        `<div class="exercises">
+                            <div class="exercise">Sit-ups: <strong>${firstWorkout.sit_ups}</strong></div>
+                            <div class="exercise">Push-ups: <strong>${firstWorkout.push_ups}</strong></div>
+                            <div class="exercise">Squats: <strong>${firstWorkout.squats}</strong></div>
+                            <div class="exercise">Pull-ups: <strong>${firstWorkout.pull_ups}</strong></div>
+                        </div>`
+                    }
+                    <p><small>Total workouts loaded: ${workouts.length}</small></p>
+                </div>
+            `;
+        }
+        
+        // Auto-load workouts when page loads
+        window.addEventListener('load', fetchWorkouts);
+    </script>
+</body>
+</html>

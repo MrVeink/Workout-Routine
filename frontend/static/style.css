@@ -1,0 +1,194 @@
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #f0f4f8;
+    --text-color: #333;
+    --light-text: #777;
+    --success-color: #5cb85c;
+    --danger-color: #d9534f;
+    --warning-color: #f0ad4e;
+    --rest-day-color: #f8d7da;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: var(--text-color);
+    background-color: #f9f9f9;
+    line-height: 1.6;
+}
+
+.app {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 16px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+header h1 {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-bottom: 4px;
+}
+
+header p {
+    color: var(--light-text);
+}
+
+.api-demo {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.api-demo h2 {
+    color: var(--primary-color);
+    margin-bottom: 16px;
+}
+
+.demo-section {
+    margin-bottom: 20px;
+}
+
+.demo-section h3 {
+    color: var(--text-color);
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+}
+
+.demo-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.demo-section li {
+    padding: 4px 0;
+    font-family: monospace;
+    background-color: var(--secondary-color);
+    padding: 8px;
+    margin: 4px 0;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.demo-section button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 4px 8px 4px 0;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+
+.demo-section button:hover {
+    background-color: #357abd;
+}
+
+#api-response {
+    background-color: #1e1e1e;
+    color: #f8f8f2;
+    padding: 16px;
+    border-radius: 8px;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.workout-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.workout-card h2 {
+    color: var(--primary-color);
+    margin-bottom: 16px;
+}
+
+.workout-info h3 {
+    color: var(--text-color);
+    margin-bottom: 12px;
+}
+
+.rest-day {
+    font-size: 1.2rem;
+    color: #721c24;
+    background-color: var(--rest-day-color);
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.exercises {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.exercise {
+    background-color: var(--secondary-color);
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.exercise strong {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+footer {
+    text-align: center;
+    margin-top: 24px;
+    padding: 16px;
+    font-size: 0.9rem;
+    color: var(--light-text);
+}
+
+code {
+    background-color: var(--secondary-color);
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9rem;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .app {
+        padding: 12px;
+    }
+    
+    .exercises {
+        grid-template-columns: 1fr;
+    }
+    
+    .demo-section button {
+        display: block;
+        width: 100%;
+        margin: 8px 0;
+    }
+}
